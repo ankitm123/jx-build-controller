@@ -29,7 +29,6 @@ import (
 	"github.com/spf13/cobra"
 	tektonclient "github.com/tektoncd/pipeline/pkg/client/clientset/versioned"
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/jaeger"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
@@ -149,15 +148,19 @@ func (o *ControllerOptions) Validate() error {
 				otlptracehttp.WithInsecure(),
 			))
 		case "jaeger:http:thrift":
-			endpoint := fmt.Sprintf("http://%s/api/traces", o.tracesExporterEndpoint)
-			_, err = http.Post(endpoint, "application/x-thrift", nil)
+			// The Jaeger thrift exporter was removed from OpenTelemetry (Jaeger now
+			// natively accepts OTLP), so this exports via OTLP HTTP to Jaeger's OTLP
+			// receiver while keeping the same flag value for backwards compatibility.
+			endpoint := fmt.Sprintf("http://%s/v1/traces", o.tracesExporterEndpoint)
+			_, err = http.Post(endpoint, "application/x-protobuf", nil)
 			if err != nil && strings.Contains(err.Error(), "no such host") {
-				log.Logger().WithError(err).Warning("Traces Exporter Endpoint configuration error. Maybe you need to install/configure the Observability stack? https://jenkins-x.io/v3/admin/guides/observability/ The OpenTelemetry Tracing feature won't be enabled until this is fixed.")
+				log.Logger().WithError(err).Warning("Traces Exporter Endpoint configuration error. Maybe you need to install/configure the Observability stack? https://jayex.io/v3/admin/guides/observability/ The OpenTelemetry Tracing feature won't be enabled until this is fixed.")
 				err = nil // ensure we won't fail. we just need to NOT set the exporter
 			} else {
-				exporter, err = jaeger.New(
-					jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(endpoint)),
-				)
+				exporter, err = otlptrace.New(ctx, otlptracehttp.NewClient(
+					otlptracehttp.WithEndpoint(o.tracesExporterEndpoint),
+					otlptracehttp.WithInsecure(),
+				))
 			}
 		}
 		if err != nil {

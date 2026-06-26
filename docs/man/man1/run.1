@@ -20,6 +20,14 @@ Promotes a version of an application to an Environment
 
 .SH OPTIONS
 .PP
+\fB\-\-activity\-check\-age\fP=1h0m0s
+    At what age pipline activities with status Pending and Running are started to be verified
+
+.PP
+\fB\-\-activity\-check\-interval\fP=10m0s
+    How often pipeline run for activity with status Pending and Running are verified
+
+.PP
 \fB\-b\fP, \fB\-\-batch\-mode\fP[=false]
     Runs in batch mode without prompting for user input
 
@@ -36,8 +44,28 @@ Promotes a version of an application to an Environment
     The kubernetes Namespace to watch for PipelineRun and PipelineActivity resources. Defaults to the current namespace
 
 .PP
+\fB\-\-operator\-namespace\fP="jx\-git\-operator"
+    The git operator namespace
+
+.PP
+\fB\-\-port\fP="8080"
+    The port for health and readiness checks to listen on
+
+.PP
+\fB\-\-traces\-exporter\-endpoint\fP=""
+    The OpenTelemetry traces exporter endpoint (host:port)
+
+.PP
+\fB\-\-traces\-exporter\-type\fP=""
+    The OpenTelemetry traces exporter type: otlp:grpc:insecure, otlp:http:insecure or jaeger:http:thrift
+
+.PP
 \fB\-\-verbose\fP[=false]
     Enables verbose output. The environment variable JX\_LOG\_LEVEL has precedence over this flag and allows setting the logging level to any value of: panic, fatal, error, warn, info, debug, trace
+
+.PP
+\fB\-\-write\-log\-timeout\fP=30m0s
+    The timeout for writing pipeline logs to the bucket
 
 
 .SH EXAMPLE
