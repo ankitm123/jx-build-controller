@@ -100,6 +100,9 @@ make-reports-dir:
 test: ## Run tests with the "unit" build tag
 	KUBECONFIG=/cluster/connections/not/allowed CGO_ENABLED=$(CGO_ENABLED) $(GOTEST) --tags="integration unit" -failfast -short ./... $(TEST_BUILDFLAGS)
 
+regen-testdata: ## Regenerate the PipelineActivity golden test data in pkg/cmd/controller/tekton/testdata
+	REGEN_TESTDATA=true KUBECONFIG=/cluster/connections/not/allowed CGO_ENABLED=$(CGO_ENABLED) $(GOTEST) --tags="integration unit" -failfast -short ./pkg/cmd/controller/tekton/... $(TEST_BUILDFLAGS)
+
 test-coverage : make-reports-dir ## Run tests and coverage for all tests with the "unit" build tag
 	CGO_ENABLED=$(CGO_ENABLED) $(GOTEST) --tags=unit $(COVERFLAGS) -failfast -short ./... $(TEST_BUILDFLAGS)
 
