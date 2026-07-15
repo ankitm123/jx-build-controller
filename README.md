@@ -10,6 +10,10 @@
 
 Also `jx-build-controller` optionally stores resources and logs to long term storage (e.g. buckets).
 
+It can also optionally export OpenTelemetry traces, via OTLP (`otlp:grpc:insecure`, `otlp:http:insecure`, `jaeger:http:thrift`), configured with `--traces-exporter-type` and `--traces-exporter-endpoint`.
+
+Note: The Jaeger thrift exporter was removed from OpenTelemetry, so `jaeger:http:thrift` uses the OTLP HTTP exporter instead. Older versions of Jaeger may not work.
+
 ## Getting Started
 
 The build controller is included OOTB inside [JayeX](https://jayex.io/docs/v3/)

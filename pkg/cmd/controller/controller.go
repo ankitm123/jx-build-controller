@@ -151,6 +151,7 @@ func (o *ControllerOptions) Validate() error {
 			// The Jaeger thrift exporter was removed from OpenTelemetry (Jaeger now
 			// natively accepts OTLP), so this exports via OTLP HTTP to Jaeger's OTLP
 			// receiver while keeping the same flag value for backwards compatibility.
+			log.Logger().Warning("Jaeger thrift exporter is deprecated, using OTLP HTTP to Jaeger instead")
 			endpoint := fmt.Sprintf("http://%s/v1/traces", o.tracesExporterEndpoint)
 			_, err = http.Post(endpoint, "application/x-protobuf", nil)
 			if err != nil && strings.Contains(err.Error(), "no such host") {
