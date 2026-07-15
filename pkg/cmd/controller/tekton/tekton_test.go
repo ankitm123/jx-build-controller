@@ -3,10 +3,11 @@ package tekton_test
 import (
 	"context"
 	"fmt"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"os"
 	"path/filepath"
 	"testing"
+
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"github.com/jenkins-x-plugins/jx-build-controller/pkg/cmd/controller/jx"
 
@@ -22,10 +23,9 @@ import (
 	"k8s.io/client-go/kubernetes/fake"
 )
 
-const (
-	// enable this flag if you want to re-generate the test input data
-	regenTestDataMode = false
-)
+// regenTestDataMode re-generates the golden test data instead of asserting
+// against it. Enable it by setting REGEN_TESTDATA=true (e.g. `make regen-testdata`).
+var regenTestDataMode = os.Getenv("REGEN_TESTDATA") == "false"
 
 func TestBuildControllerTekton(t *testing.T) {
 	sourceDir := filepath.Join("testdata", "tekton")
