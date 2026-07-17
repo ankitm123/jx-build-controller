@@ -5,10 +5,10 @@ go 1.26.3
 require (
 	github.com/cpuguy83/go-md2man v1.0.10
 	github.com/gorilla/mux v1.8.1
-	github.com/jenkins-x-plugins/jx-pipeline v0.7.40
+	github.com/jenkins-x-plugins/jx-pipeline v0.7.41
 	github.com/jenkins-x-plugins/jx-secret v0.4.21
 	github.com/jenkins-x/jx-api/v4 v4.8.6
-	github.com/jenkins-x/jx-helpers/v3 v3.11.1
+	github.com/jenkins-x/jx-helpers/v3 v3.11.3
 	github.com/jenkins-x/jx-kube-client/v3 v3.0.11
 	github.com/jenkins-x/jx-logging/v3 v3.1.6
 	github.com/spf13/cobra v1.10.2
@@ -173,12 +173,10 @@ require (
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/crypto v0.53.0 // indirect
 	golang.org/x/exp v0.0.0-20260603202125-055de637280b // indirect
-	golang.org/x/mod v0.37.0 // indirect
 	golang.org/x/net v0.56.0 // indirect
 	golang.org/x/oauth2 v0.36.0 // indirect
 	golang.org/x/sync v0.21.0 // indirect
 	golang.org/x/sys v0.46.0 // indirect
-	golang.org/x/telemetry v0.0.0-20260625142307-59b4966ccb57 // indirect
 	golang.org/x/term v0.44.0 // indirect
 	golang.org/x/text v0.38.0 // indirect
 	golang.org/x/time v0.15.0 // indirect
